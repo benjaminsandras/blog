@@ -18,8 +18,8 @@
 	
 
 	<form method="post">
-		<textarea name="newtitle"></textarea>
-		<textarea name="newtext"></textarea>
+		<textarea rows="2" name="newtitle"></textarea>
+		<textarea rows="5" name="newtext"></textarea>
 		<button type="submit">send</button>
 	</form>
 
@@ -61,43 +61,100 @@
 	<div>
 		<?php
 
-		$reponse = $bdd->query('SELECT * FROM articles') ;
-
-		while($donnees=$reponse->fetch()){
-
-			echo 
-
-			'<div class="countain">' .
-			'<div class="article">' . $donnees['title'] . '</div>' .
-			'<div class="article">' . $donnees['texte'] . '</div>' . 
-			'<form method="get">
-			<button name="modifier" type="submit" >' . 'modifier' . '</button>' . 
-			'<button name="supp" type="submit">' . 'supprimer' . '</button>' .
-			'<input name="input" value=' . $donnees['id'] . '></form>' .
-
-			'</div>' ;
+		if (isset($_GET['modifier'])) {
+			$id = $_GET['input'];
+			$title = $_GET['title'];
+			$texte = $_GET['texte'];
 			
+			$bdd = new PDO('mysql:host=localhost;dbname=monblog;charset=utf8', 'benji', 'aqwsedcft7777');
+			$bdd->query("UPDATE articles SET title = '".$title."'" "WHERE id= ".$id);
+			
+			var_dump($title);
+			var_dump($texte);
+			// unset($id);
+			// unset($title);
+			// unset($texte);
+
+			$reponse = $bdd->query('SELECT * FROM articles') ;
+
+			while($donnees=$reponse->fetch()){
+
+				echo 
+				'<form method="get">' .
+				'<div class="countain">' .
+				'<textarea rows="2" name="title" class="article" value=' . $donnees['title'] . '>' . $donnees['title'] . '</textarea>' .
+				'<textarea rows="5" name="texte" class="article" value=' . $donnees['texte'] . '>' . $donnees['texte'] . '</textarea>' . 
+				
+				'<button name="modifier" type="submit" >' . 'modifier' . '</button>' . 
+				'<button name="supp" type="submit">' . 'supprimer' . '</button>' .
+				'<input class="inputid" name="input" value=' . $donnees['id'] . '></form>' .
+
+				'</div>' ;
+
+
+			}
 
 		}
-		// if (isset($_GET['supp'])) {
+
+		else if (isset($_GET['supp'])) {
 			$id = $_GET['input'];
 
-			// $bdd->query("DELETE FROM articles WHERE id=".
-			// 	$id) ;
+			$bdd->query("DELETE FROM articles WHERE id=".
+				$id) ;
 
-			var_dump($id);
-			// unset($id);
-		// }
-		?>
+			
+			unset($id);
 
-		<?php
+			$reponse = $bdd->query('SELECT * FROM articles') ;
+
+			while($donnees=$reponse->fetch()){
+
+				echo 
+				'<form method="get">' .
+				'<div class="countain">' .
+				'<textarea rows="2" name="title" class="article" value=' . $donnees['title'] . '>' . $donnees['title'] . '</textarea>' .
+				'<textarea rows="5" name="texte" class="article" value=' . $donnees['texte'] . '>' . $donnees['texte'] . '</textarea>' . 
+				
+				'<button name="modifier" type="submit" >' . 'modifier' . '</button>' . 
+				'<button name="supp" type="submit">' . 'supprimer' . '</button>' .
+				'<input class="inputid" name="input" value=' . $donnees['id'] . '></form>' .
+
+				'</div>' ;
+
+
+			}
+
+		}
+
+		else{
+
+			$reponse = $bdd->query('SELECT * FROM articles') ;
+
+			while($donnees=$reponse->fetch()){
+
+				echo 
+				'<form method="get">' .
+				'<div class="countain">' .
+				'<textarea rows="2" name="title" class="article" value=' . $donnees['title'] . '>' . $donnees['title'] . '</textarea>' .
+				'<textarea rows="5" name="texte" class="article" value=' . $donnees['title'] . '>' . $donnees['texte'] . '</textarea>' . 
+				
+				'<button name="modifier" type="submit" >' . 'modifier' . '</button>' . 
+				'<button name="supp" type="submit">' . 'supprimer' . '</button>' .
+				'<input class="inputid" name="input" value=' . $donnees['id'] . '></form>' .
+
+				'</div>' ;
+
+
+			}
+
+		}
 		?>
 
 	</div>
 
-	
 
-	
+
+
 
 </body>
 </html>

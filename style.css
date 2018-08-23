@@ -7,3 +7,13 @@
 .article{
 	margin : 2%;
 }
+
+.inputid{
+	display: none;
+}
+
+textarea{
+	width: 50%;
+	height: 150%;
+
+}
