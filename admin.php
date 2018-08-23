@@ -66,14 +66,17 @@
 			$title = $_GET['title'];
 			$texte = $_GET['texte'];
 			
-			$bdd = new PDO('mysql:host=localhost;dbname=monblog;charset=utf8', 'benji', 'aqwsedcft7777');
-			$bdd->query("UPDATE articles SET title = '".$title."'" "WHERE id= ".$id);
-			
-			var_dump($title);
-			var_dump($texte);
-			// unset($id);
-			// unset($title);
-			// unset($texte);
+			$query  = "
+			UPDATE
+			articles
+			SET
+			title = '".$title."',
+			texte = '".$texte."'
+			WHERE
+			id    = '".$id."'";
+
+			/* Envoie de la requête */
+			$bdd->query($query);
 
 			$reponse = $bdd->query('SELECT * FROM articles') ;
 
@@ -93,6 +96,7 @@
 
 
 			}
+
 
 		}
 
